@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e6f7ff; /* Light blue background for comfort */
+            color: black; /* Black font color */
+            overflow: hidden; /* Prevent scrolling */
+            margin: 0; /* Remove default margin */
+        }
+        
+        .quiz-container {
+            max-width: 600px; /* Limit width for readability */
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* White semi-transparent background */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+            text-align: center; /* Center text */
+            position: relative; /* Positioning context for the line */
+            z-index: 1; /* Ensure the quiz container is above the progress line */
+        }
+
+        h1 {
+            font-size: 24px; /* Larger header size */
+            margin-bottom: 20px; /* Spacing below header */
+        }
+
+        h2 {
+            font-size: 20px; /* Medium header size for questions */
+            margin-bottom: 10px; /* Spacing below question */
+        }
+
+        p {
+            font-size: 18px; /* Slightly larger text for questions */
+            margin: 20px 0; /* More spacing around the question text */
+        }
+
+        .options {
+            text-align: left; /* Align options to the left for clarity */
+            margin-bottom: 20px; /* Spacing below options */
+        }
+
+        .options label {
+            display: block; /* Make each option a block element */
+            margin: 10px 0; /* Space between options */
+            padding: 10px; /* Padding around each option */
+            background-color: #f0f8ff; /* Light option background for comfort */
+            border-radius: 5px; /* Rounded corners for options */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s; /* Smooth background transition */
+        }
+
+        .options label:hover {
+            background-color: #d1e7dd; /* Change background on hover for interactivity */
+        }
+
+        .submit-button {
+            padding: 10px 20px; /* Padding for button */
+            font-size: 18px; /* Button text size */
+            background-color: #ffc107; /* Yellow button color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners for button */
+            cursor: pointer; /* Pointer cursor */
+            transition: background-color 0.3s; /* Smooth background transition */
+        }
+
+        .submit-button:hover {
+            background-color: #e0a800; /* Darker yellow on hover */
+        }
+
+        .sonic-container {
+            text-align: center; /* Center Sonic */
+            margin-top: 20px; /* Space above Sonic container */
+        }
+
+        #sonic {
+            position: relative; /* Relative position for Sonic */
+            bottom: 0; /* Position at the bottom of the container */
+            transition: left 0.3s; /* Smooth transition for left movement */
+        }
+
+        .progress-line {
+            height: 5px; /* Height of the progress line */
+            background-color: #007bff; /* Line color */
+            width: 100%; /* Full width */
+            margin-top: 20px; /* Spacing above progress line */
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Welcome to the Sonic Quiz!</h1>
+        <h2>Question {{ question_number }} of 10</h2>
+        <p>{{ question.question_number }}</p>
+        <div class="options">
+            {% for option in question.options %}
+                <label>
+                    <input type="radio" name="answer" value="{{ option[0] }}">
+                    {{ option }}
+                </label>
+            {% endfor %}
+        </div>
+        <form method="post">
+            <button type="submit" class="submit-button">Submit Answer</button>
+        </form>
+    </div>
+
+    <div class="sonic-container">
+        <div id="sonic" style="left: {{ sonic_position }}px;">
+            <img src="{{ url_for('static', filename='images/sonic-running.gif') }}" alt="Sonic" width="100">
+        </div>
+        <div class="progress-line" id="progressLine"></div> <!-- Progress line at the bottom -->
+    </div>
+</body>
+</html>

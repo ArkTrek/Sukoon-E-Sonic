@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Quiz - Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e6f7ff; /* Light blue background for comfort */
+            color: black; /* Black font color */
+        }
+        
+        .result-container {
+            max-width: 600px; /* Limit width for readability */
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* White semi-transparent background */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+            text-align: center; /* Center text */
+        }
+
+        h1 {
+            font-size: 24px; /* Larger header size */
+            margin-bottom: 20px; /* Spacing below header */
+        }
+
+        h2 {
+            font-size: 20px; /* Medium header size for results */
+            margin-bottom: 10px; /* Spacing below result header */
+        }
+
+        p {
+            font-size: 18px; /* Slightly larger text for results */
+            margin: 20px 0; /* More spacing around the result text */
+        }
+
+        .score {
+            font-size: 22px; /* Larger text for score */
+            font-weight: bold; /* Bold score text */
+            margin: 20px 0; /* Spacing around score */
+            color: #ffcc00; /* Gold color for score */
+        }
+
+        .restart-button {
+            background-color: #ffcc00; /* Gold button color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px; /* Button text size */
+            cursor: pointer; /* Pointer cursor */
+            transition: background-color 0.3s; /* Smooth transition for button */
+        }
+
+        .restart-button:hover {
+            background-color: #ffd700; /* Darker gold on hover */
+        }
+
+        /* Sonic Position */
+        .sonic {
+            margin-left: 20px; /* Space above Sonic image */
+        }
+		
+		.victory-animation {
+			margin-left: 110px;
+			margin-top: 10px;
+		}
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Quiz Completed!</h1>
+        
+        <!-- Display Sonic Victory GIF -->
+        <div class="victory-animation">
+            <img src="{{ url_for('static', filename='images/sonic-victory.gif') }}" alt="Sonic Victory">
+        </div>
+
+        <p>Your Score: {{ score }} out of 10</p>
+        <p>Your Performance: {{ category }}</p>
+        <a href="{{ url_for('index') }}" class="restart-button">Restart Quiz</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+[
+    {
+        "question_number": "Your boss sends you a very short email in response to the work you submitted. How do you interpret the situation?",
+        "options": [
+            "A) He is upset with me because of my work.",
+            "B) He is busy and didn’t have time to write more.",
+            "C) He responded briefly because it was clear and simple."
+        ]
+    },
+    {
+        "question_number": "Why do you think your boss might be upset with you?",
+        "options": [
+            "A) I made a mistake that I didn’t notice.",
+            "B) He is usually more detailed in emails.",
+            "C) It’s just a feeling I have about this."
+        ]
+    },
+    {
+        "question_number": "How does thinking your boss is busy make you feel?",
+        "options": [
+            "A) Relieved, it’s a reasonable explanation.",
+            "B) Neutral, but I still feel slightly concerned.",
+            "C) A bit better, but I wish I knew more."
+        ]
+    },
+    {
+        "question_number": "Do you typically prefer brief communication like this?",
+        "options": [
+            "A) Yes, I like it when messages are clear and concise.",
+            "B) Sometimes, but I also appreciate more detail.",
+            "C) Not always, but it doesn’t bother me much."
+        ]
+    },
+    {
+        "question_number": "How often do you think people are upset when they communicate briefly?",
+        "options": [
+            "A) Often, I usually assume the worst in situations.",
+            "B) Sometimes, but I can be unsure about their intent.",
+            "C) Rarely, but short communication makes me anxious."
+        ]
+    },
+    {
+        "question_number": "How do you feel after interpreting your boss's email as brief?",
+        "options": [
+            "A) I feel anxious and worried about my performance.",
+            "B) I feel calm and think it's a good sign.",
+            "C) I feel confused about what to think."
+        ]
+    },
+    {
+        "question_number": "What would you do next after receiving such an email?",
+        "options": [
+            "A) Ask for clarification to understand better.",
+            "B) Assume it's fine and move on.",
+            "C) Analyze my previous work to find mistakes."
+        ]
+    },
+    {
+        "question_number": "Do you think it's normal for bosses to respond briefly?",
+        "options": [
+            "A) Yes, they have a lot to manage.",
+            "B) Sometimes, but they should be more considerate.",
+            "C) No, it's unprofessional."
+        ]
+    },
+    {
+        "question_number": "How would you feel if your colleague received a similar email?",
+        "options": [
+            "A) I would feel relieved that I'm not alone.",
+            "B) I would think it's unfair to them.",
+            "C) I wouldn’t care much about it."
+        ]
+    },
+    {
+        "question_number": "What is the most challenging part about interpreting brief communication?",
+        "options": [
+            "A) The ambiguity of the message.",
+            "B) My tendency to overthink.",
+            "C) Trying to understand the other person's perspective."
+        ]
+    },
+    {
+        "question_number": "In hindsight, how do you feel about the email now?",
+        "options": [
+            "A) I still feel worried.",
+            "B) I feel better after thinking it through.",
+            "C) I feel indifferent."
+        ]
+    }
+]
