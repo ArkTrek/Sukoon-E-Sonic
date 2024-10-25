@@ -60,63 +60,159 @@
             background-color: #d1e7dd; /* Change background on hover for interactivity */
         }
 
-        .submit-button {
-            padding: 10px 20px; /* Padding for button */
-            font-size: 18px; /* Button text size */
-            background-color: #ffc107; /* Yellow button color */
-            color: white; /* Button text color */
-            border: none; /* No border */
-            border-radius: 5px; /* Rounded corners for button */
+        .next-button {
+            background-color: #ffcc00; /* Gold button color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px; /* Button text size */
             cursor: pointer; /* Pointer cursor */
-            transition: background-color 0.3s; /* Smooth background transition */
+            transition: background-color 0.3s; /* Smooth transition for button */
         }
 
-        .submit-button:hover {
-            background-color: #e0a800; /* Darker yellow on hover */
+        .next-button:hover {
+            background-color: #ffd700; /* Darker gold on hover */
         }
 
         .sonic-container {
-            text-align: center; /* Center Sonic */
-            margin-top: 20px; /* Space above Sonic container */
+            position: relative; /* Ensure this is relative for positioning child elements */
+            text-align: center; /* Center Sonic image and progress line */
+            margin-top: 20px; /* Space above the container */
         }
 
         #sonic {
-            position: relative; /* Relative position for Sonic */
-            bottom: 0; /* Position at the bottom of the container */
-            transition: left 0.3s; /* Smooth transition for left movement */
+            position: absolute; /* Allow Sonic to move freely within the container */
+            bottom: 20px; /* Positioned above the line */
+            left: 0; /* Starting position */
+            transition: left 0.3s ease; /* Smooth transition for movement */
+            z-index: 0; /* Ensure Sonic is behind the quiz container */
         }
 
         .progress-line {
-            height: 5px; /* Height of the progress line */
-            background-color: #007bff; /* Line color */
+            height: 5px; /* Line height */
+            background-color: gray; /* Initial color */
+            transition: background-color 0.3s ease; /* Smooth color transition */
             width: 100%; /* Full width */
-            margin-top: 20px; /* Spacing above progress line */
+            position: relative; /* Positioning the line */
+            bottom: 0; /* Position it at the bottom */
+            z-index: 0; /* Ensure the line is behind the quiz container */
+            margin-top: 10px; /* Space above the progress line */
+        }
+
+        .progress-point {
+            position: absolute; /* Absolute positioning for points */
+            height: 10px; /* Point height */
+            width: 10px; /* Point width */
+            border-radius: 50%; /* Make it circular */
+            background-color: black; /* Point color */
+            top: -3px; /* Center the point vertically */
         }
     </style>
 </head>
 <body>
     <div class="quiz-container">
-        <h1>Welcome to the Sonic Quiz!</h1>
-        <h2>Question {{ question_number }} of 10</h2>
-        <p>{{ question.question_number }}</p>
-        <div class="options">
-            {% for option in question.options %}
-                <label>
-                    <input type="radio" name="answer" value="{{ option[0] }}">
-                    {{ option }}
-                </label>
-            {% endfor %}
-        </div>
-        <form method="post">
-            <button type="submit" class="submit-button">Submit Answer</button>
+        <h1>Quiz</h1>
+        <h2>Question <span id="question-number">{{ question_number }}</span></h2>
+        <form id="quiz-form" method="post">
+            <p id="question-text">{{ question['question_number'] }}</p>
+            <div class="options" id="options-container">
+                {% for option in question['options'] %}
+                    <label>
+                        <input type="radio" name="answer" value="{{ option[0] }}" required>
+                        {{ option }}
+                    </label>
+                {% endfor %}
+            </div>
+            <button type="submit" class="next-button">Next</button>
         </form>
     </div>
 
     <div class="sonic-container">
-        <div id="sonic" style="left: {{ sonic_position }}px;">
+        <div id="sonic" style="left: 0;">
             <img src="{{ url_for('static', filename='images/sonic-running.gif') }}" alt="Sonic" width="100">
         </div>
         <div class="progress-line" id="progressLine"></div> <!-- Progress line at the bottom -->
     </div>
+
+    <script>
+        // Sample questions data passed from Flask
+        const questions = {{ questions }};
+        let currentQuestionIndex = 0; // Track the current question index
+        let sonicPosition = 0; // Sonic's starting position
+        const totalQuestions = questions.length; // Total number of questions
+        const sonicMovement = (window.innerWidth - 100) / (totalQuestions - 1); // Move Sonic based on screen width per question (subtracting Sonic's width)
+        const progressLine = document.getElementById('progressLine');
+        const totalPoints = 10; // Number of points on the progress line
+        const pointDistance = (window.innerWidth / totalPoints); // Distance between points
+
+        // Function to load the current question
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('question-number').textContent = currentQuestionIndex + 1; // Update question number
+            document.getElementById('question-text').textContent = question.question_number; // Update question text
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = ''; // Clear previous options
+
+            question.options.forEach(option => {
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="radio" name="answer" value="${option}" required>${option}`;
+                optionsContainer.appendChild(label);
+            });
+
+            // Create points on the progress line
+            createProgressPoints();
+        }
+
+        // Function to create points on the progress line
+        function createProgressPoints() {
+            const existingPoints = document.querySelectorAll('.progress-point');
+            existingPoints.forEach(point => point.remove()); // Clear previous points
+
+            for (let i = 0; i < totalPoints; i++) {
+                const point = document.createElement('div');
+                point.className = 'progress-point';
+                point.style.left = (i * pointDistance) + 'px'; // Position point
+                progressLine.appendChild(point); // Add point to the progress line
+            }
+        }
+
+        // Function to update the progress line color based on Sonic's position
+        function updateProgressLine() {
+            const progressPercentage = (sonicPosition / (totalQuestions - 1)) * 100;
+
+            // Change color based on Sonic's position
+            if (progressPercentage < 33) {
+                progressLine.style.backgroundColor = 'red'; // Low progress
+            } else if (progressPercentage < 66) {
+                progressLine.style.backgroundColor = 'yellow'; // Neutral progress
+            } else {
+                progressLine.style.backgroundColor = 'green'; // High progress
+            }
+        }
+
+        // Load the first question on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQuestion();
+            updateProgressLine();
+        });
+
+        // Listen for form submission
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Move Sonic right by a fixed distance each question answered
+            if (currentQuestionIndex < totalQuestions - 1) {
+                sonicPosition++; // Increment Sonic's position
+                document.getElementById('sonic').style.left = (sonicPosition * sonicMovement) + 'px'; // Update Sonic's position
+                updateProgressLine(); // Update line color after moving Sonic
+                currentQuestionIndex++; // Move to the next question
+                loadQuestion(); // Load the next question
+            } else {
+                alert("Quiz complete!"); // Notify quiz completion
+                // Optionally reset the quiz or redirect
+            }
+        });
+    </script>
 </body>
 </html>
