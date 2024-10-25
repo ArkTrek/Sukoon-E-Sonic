@@ -133,8 +133,11 @@
         </div>
         <div class="progress-line" id="progressLine"></div>
     </div>
-
+	<audio id="quiz-audio" autoplay>
+        <source src="audio/sonic-race.mp3" type="audio/mp3">
+    </audio>
     <script>
+		document.getElementById('quiz-audio').play();
         const questions = {{ questions }}; // Make sure JSON format is passed correctly
         let currentQuestionIndex = {{ question_number | tojson }} - 1;
         let sonicPosition = 0;
