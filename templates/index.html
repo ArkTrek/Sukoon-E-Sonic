@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #e6f7ff; /* Light blue background for comfort */
-            color: black; /* Black font color */
+            background-color: #e6f7ff;
+            color: black;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,51 +21,50 @@
             text-align: center;
             margin: 20px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.9); /* White semi-transparent background */
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-            max-width: 90%; /* Responsive design */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
         }
 
         h1 {
-            font-size: 24px; /* Larger header size for welcome */
-            margin-bottom: 20px; /* Space below header */
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
         label {
-            font-size: 18px; /* Slightly larger text for label */
-            margin-bottom: 10px; /* Space below label */
-            display: block; /* Block display for better alignment */
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
         }
 
         input[type="text"] {
-            padding: 10px; /* Padding for text input */
-            font-size: 16px; /* Font size for input */
-            border: 1px solid #ccc; /* Border for input */
-            border-radius: 5px; /* Rounded corners for input */
-            width: calc(100% - 24px); /* Full width minus padding */
-            margin-bottom: 20px; /* Space below input */
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 24px);
+            margin-bottom: 20px;
         }
 
         button {
-            background-color: #ffcc00; /* Gold color */
+            background-color: #ffcc00;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s; /* Smooth transition for button */
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #ffd700; /* Darker gold on hover */
+            background-color: #ffd700;
         }
 
-        /* Sonic image */
         .sonic-idle {
-            max-width: 100%; /* Responsive image */
-            height: auto; /* Maintain aspect ratio */
-            margin-bottom: 20px; /* Space below image */
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -73,11 +72,22 @@
     <div class="container">
         <img src="{{ url_for('static', filename='images/sonic-idle.gif') }}" alt="Sonic Idle" class="sonic-idle">
         <h1>Welcome to the Sonic Quiz!</h1>
-        <form method="POST"">
+        <form method="POST" id="quiz-form">
             <label for="name">Enter your name:</label>
             <input type="text" id="name" name="name" required>
             <button type="submit">Start Quiz</button>
         </form>
     </div>
-	</body>
+
+    <audio id="sonic-audio">
+        <source src="{{ url_for('static', filename='audio/sonic-intro.mp3') }}" type="audio/mp3">
+    </audio>
+
+    <script>
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            const audio = document.getElementById('sonic-audio');
+            audio.play();
+        });
+    </script>
+</body>
 </html>
