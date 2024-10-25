@@ -8,104 +8,104 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #e6f7ff; /* Light blue background for comfort */
-            color: black; /* Black font color */
-            overflow: hidden; /* Prevent scrolling */
-            margin: 0; /* Remove default margin */
+            background-color: #e6f7ff;
+            color: black;
+            overflow: hidden;
+            margin: 0;
         }
         
         .quiz-container {
-            max-width: 600px; /* Limit width for readability */
+            max-width: 600px;
             margin: auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.9); /* White semi-transparent background */
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-            text-align: center; /* Center text */
-            position: relative; /* Positioning context for the line */
-            z-index: 1; /* Ensure the quiz container is above the progress line */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
-            font-size: 24px; /* Larger header size */
-            margin-bottom: 20px; /* Spacing below header */
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
         h2 {
-            font-size: 20px; /* Medium header size for questions */
-            margin-bottom: 10px; /* Spacing below question */
+            font-size: 20px;
+            margin-bottom: 10px;
         }
 
         p {
-            font-size: 18px; /* Slightly larger text for questions */
-            margin: 20px 0; /* More spacing around the question text */
+            font-size: 18px;
+            margin: 20px 0;
         }
 
         .options {
-            text-align: left; /* Align options to the left for clarity */
-            margin-bottom: 20px; /* Spacing below options */
+            text-align: left;
+            margin-bottom: 20px;
         }
 
         .options label {
-            display: block; /* Make each option a block element */
-            margin: 10px 0; /* Space between options */
-            padding: 10px; /* Padding around each option */
-            background-color: #f0f8ff; /* Light option background for comfort */
-            border-radius: 5px; /* Rounded corners for options */
-            cursor: pointer; /* Pointer cursor on hover */
-            transition: background-color 0.3s; /* Smooth background transition */
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .options label:hover {
-            background-color: #d1e7dd; /* Change background on hover for interactivity */
+            background-color: #d1e7dd;
         }
 
         .next-button {
-            background-color: #ffcc00; /* Gold button color */
+            background-color: #ffcc00;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            font-size: 16px; /* Button text size */
-            cursor: pointer; /* Pointer cursor */
-            transition: background-color 0.3s; /* Smooth transition for button */
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .next-button:hover {
-            background-color: #ffd700; /* Darker gold on hover */
+            background-color: #ffd700;
         }
 
         .sonic-container {
-            position: relative; /* Ensure this is relative for positioning child elements */
-            text-align: center; /* Center Sonic image and progress line */
-            margin-top: 20px; /* Space above the container */
+            position: relative;
+            text-align: center;
+            margin-top: 20px;
         }
 
         #sonic {
-            position: absolute; /* Allow Sonic to move freely within the container */
-            bottom: 20px; /* Positioned above the line */
-            left: 0; /* Starting position */
-            transition: left 0.3s ease; /* Smooth transition for movement */
-            z-index: 0; /* Ensure Sonic is behind the quiz container */
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            transition: left 0.3s ease;
+            z-index: 0;
         }
 
         .progress-line {
-            height: 5px; /* Line height */
-            background-color: gray; /* Initial color */
-            transition: background-color 0.3s ease; /* Smooth color transition */
-            width: 100%; /* Full width */
-            position: relative; /* Positioning the line */
-            bottom: 0; /* Position it at the bottom */
-            z-index: 0; /* Ensure the line is behind the quiz container */
-            margin-top: 10px; /* Space above the progress line */
+            height: 5px;
+            background-color: gray;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            z-index: 0;
+            margin-top: 10px;
         }
 
         .progress-point {
-            position: absolute; /* Absolute positioning for points */
-            height: 10px; /* Point height */
-            width: 10px; /* Point width */
-            border-radius: 50%; /* Make it circular */
-            background-color: black; /* Point color */
-            top: -3px; /* Center the point vertically */
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background-color: black;
+            top: -3px;
         }
     </style>
 </head>
@@ -131,86 +131,76 @@
         <div id="sonic" style="left: 0;">
             <img src="{{ url_for('static', filename='images/sonic-running.gif') }}" alt="Sonic" width="100">
         </div>
-        <div class="progress-line" id="progressLine"></div> <!-- Progress line at the bottom -->
+        <div class="progress-line" id="progressLine"></div>
     </div>
 
     <script>
-        // Sample questions data passed from Flask
-        const questions = {{ questions }};
-        let currentQuestionIndex = 0; // Track the current question index
-        let sonicPosition = 0; // Sonic's starting position
-        const totalQuestions = questions.length; // Total number of questions
-        const sonicMovement = (window.innerWidth - 100) / (totalQuestions - 1); // Move Sonic based on screen width per question (subtracting Sonic's width)
+        const questions = {{ questions }}; // Make sure JSON format is passed correctly
+        let currentQuestionIndex = {{ question_number | tojson }} - 1;
+        let sonicPosition = 0;
+        const totalQuestions = questions.length;
+        const sonicMovement = (window.innerWidth - 100) / (totalQuestions - 1);
         const progressLine = document.getElementById('progressLine');
-        const totalPoints = 10; // Number of points on the progress line
-        const pointDistance = (window.innerWidth / totalPoints); // Distance between points
+        const totalPoints = 10;
+        const pointDistance = (window.innerWidth / totalPoints);
 
-        // Function to load the current question
         function loadQuestion() {
             const question = questions[currentQuestionIndex];
-            document.getElementById('question-number').textContent = currentQuestionIndex + 1; // Update question number
-            document.getElementById('question-text').textContent = question.question_number; // Update question text
-            
+            document.getElementById('question-number').textContent = currentQuestionIndex + 1;
+            document.getElementById('question-text').textContent = question.question;
+
             const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = ''; // Clear previous options
+            optionsContainer.innerHTML = '';
 
             question.options.forEach(option => {
                 const label = document.createElement('label');
-                label.innerHTML = `<input type="radio" name="answer" value="${option}" required>${option}`;
+                label.innerHTML = `<input type="radio" name="answer" value="${option[0]}" required>${option}`;
                 optionsContainer.appendChild(label);
             });
 
-            // Create points on the progress line
             createProgressPoints();
         }
 
-        // Function to create points on the progress line
         function createProgressPoints() {
             const existingPoints = document.querySelectorAll('.progress-point');
-            existingPoints.forEach(point => point.remove()); // Clear previous points
+            existingPoints.forEach(point => point.remove());
 
             for (let i = 0; i < totalPoints; i++) {
                 const point = document.createElement('div');
                 point.className = 'progress-point';
-                point.style.left = (i * pointDistance) + 'px'; // Position point
-                progressLine.appendChild(point); // Add point to the progress line
+                point.style.left = (i * pointDistance) + 'px';
+                progressLine.appendChild(point);
             }
         }
 
-        // Function to update the progress line color based on Sonic's position
         function updateProgressLine() {
             const progressPercentage = (sonicPosition / (totalQuestions - 1)) * 100;
 
-            // Change color based on Sonic's position
             if (progressPercentage < 33) {
-                progressLine.style.backgroundColor = 'red'; // Low progress
+                progressLine.style.backgroundColor = 'red';
             } else if (progressPercentage < 66) {
-                progressLine.style.backgroundColor = 'yellow'; // Neutral progress
+                progressLine.style.backgroundColor = 'yellow';
             } else {
-                progressLine.style.backgroundColor = 'green'; // High progress
+                progressLine.style.backgroundColor = 'green';
             }
         }
 
-        // Load the first question on page load
         document.addEventListener('DOMContentLoaded', () => {
             loadQuestion();
             updateProgressLine();
         });
 
-        // Listen for form submission
         document.getElementById('quiz-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
-            // Move Sonic right by a fixed distance each question answered
             if (currentQuestionIndex < totalQuestions - 1) {
-                sonicPosition++; // Increment Sonic's position
-                document.getElementById('sonic').style.left = (sonicPosition * sonicMovement) + 'px'; // Update Sonic's position
-                updateProgressLine(); // Update line color after moving Sonic
-                currentQuestionIndex++; // Move to the next question
-                loadQuestion(); // Load the next question
+                sonicPosition++;
+                document.getElementById('sonic').style.left = (sonicPosition * sonicMovement) + 'px';
+                updateProgressLine();
+                currentQuestionIndex++;
+                loadQuestion();
             } else {
-                alert("Quiz complete!"); // Notify quiz completion
-                // Optionally reset the quiz or redirect
+                alert("Quiz complete!");
             }
         });
     </script>
