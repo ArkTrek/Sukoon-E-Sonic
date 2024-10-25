@@ -26,6 +26,9 @@ Sukoon-E-Sonic is an interactive quiz application designed to engage users in a 
 Open your browser and navigate to http://127.0.0.1:5000/ to access the quiz.
 Follow the prompts to answer questions and receive feedback.
 
+- **Note:** The "vid.py" file is able to combine a gif file with an audio file to generate a video file. Use it as needed.
+     - If the gif holds a transparent bg, it will get overwritten by a white background during encoding.
+     - The duration of the video file will be determined by the length of the audio file. 
 ---
 
 ## License
