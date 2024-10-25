@@ -26,7 +26,7 @@ def index():
     if request.method == 'POST':
         session.clear()
         session['name'] = request.form['name']
-        session['question_number'] = 0
+        session['question_number'] = 1
         session['user_answers'] = []
         session['session_status'] = 1
         session['start_time'] = time.time()
@@ -43,7 +43,7 @@ def quiz():
     questions = generate_questions()
 
     if 'question_number' not in session:
-        session['question_number'] = 0
+        session['question_number'] = 1
         session['user_answers'] = []
 
     question_number = session['question_number']
