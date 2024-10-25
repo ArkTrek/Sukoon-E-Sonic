@@ -3,94 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result</title>
+    <title>Sonic Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            color: black; /* Black font color */
-            {% if category in ['high', 'neutral'] %} /* Conditional background based on score */
-            background-image: url('{{ url_for("static", filename="images/victory-bg.png") }}');
-            background-size: cover; /* Cover entire background */
-            background-position: center; /* Center the background image */
-            background-repeat: no-repeat; /* Prevent the background from repeating */
-            height: 100vh; /* Set the body height to full viewport height */
-            {% else %}
-            background-color: #e6f7ff; /* Light blue background for comfort */
-            {% endif %}
+            background-color: #e6f7ff;
+            color: black;
+            overflow: hidden;
+            margin: 0;
         }
         
-        .result-container {
-            max-width: 600px; /* Limit width for readability */
+        .quiz-container {
+            max-width: 600px;
             margin: auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.9); /* White semi-transparent background */
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-            text-align: center; /* Center text */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
-            font-size: 24px; /* Larger header size */
-            margin-bottom: 20px; /* Spacing below header */
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
         h2 {
-            font-size: 20px; /* Medium header size for results */
-            margin-bottom: 10px; /* Spacing below result header */
+            font-size: 20px;
+            margin-bottom: 10px;
         }
 
         p {
-            font-size: 18px; /* Slightly larger text for results */
-            margin: 20px 0; /* More spacing around the result text */
+            font-size: 18px;
+            margin: 20px 0;
         }
 
-        .score {
-            font-size: 22px; /* Larger text for score */
-            font-weight: bold; /* Bold score text */
-            margin: 20px 0; /* Spacing around score */
-            color: #ffcc00; /* Gold color for score */
+        .options {
+            text-align: left;
+            margin-bottom: 20px;
         }
 
-        .restart-button {
-            background-color: #ffcc00; /* Gold button color */
+        .options label {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .options label:hover {
+            background-color: #d1e7dd;
+        }
+
+        .next-button {
+            background-color: #ffcc00;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            font-size: 16px; /* Button text size */
-            cursor: pointer; /* Pointer cursor */
-            transition: background-color 0.3s; /* Smooth transition for button */
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .restart-button:hover {
-            background-color: #ffd700; /* Darker gold on hover */
+        .next-button:hover {
+            background-color: #ffd700;
         }
 
-        /* Sonic Position */
-        .sonic {
-            margin-left: 20px; /* Space above Sonic image */
+        .sonic-container {
+            position: relative;
+            text-align: center;
+            margin-top: 20px;
+			margin-right: 100px;
         }
-		
-		.victory-animation {
-			margin-left: 110px;
-			margin-top: -150px;
-		}
+
+        #sonic {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .progress-line {
+            height: 5px;
+            background-color: gray;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            z-index: 0;
+            margin-top: 10px;
+        }
+
+        .progress-point {
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background-color: black;
+            top: -3px;
+        }
     </style>
 </head>
 <body>
-    <div class="result-container">
-        <h1>Quiz Completed!</h1>
-        
-        <!-- Display Sonic Victory GIF -->
-        <div class="victory-animation">
-            <img src="{{ url_for('static', filename='images/sonic-victory.gif') }}" alt="Sonic Victory">
-        </div>
-
-        <p>Your Score: {{ score }} out of 10</p>
-        <p>Your Performance: {{ category }}</p>
-        <a href="{{ url_for('index') }}" class="restart-button">Restart Quiz</a>
+    <div class="quiz-container">
+        <h1>Quiz</h1>
+        <h2>Question <span id="question-number">{{ question_number }}</span></h2>
+        <form id="quiz-form" method="post">
+            <p id="question-text">{{ question['question_number'] }}</p>
+            <div class="options" id="options-container">
+                {% for option in question['options'] %}
+                    <label>
+                        <input type="radio" name="answer" value="{{ option[0] }}" required>
+                        {{ option }}
+                    </label>
+                {% endfor %}
+            </div>
+            <button type="submit" class="next-button">Next</button>
+        </form>
     </div>
-	<audio id="victory-audio" autoplay loop>
-        <source src="audio/sonic-victory.mp3" type="audio/mp3">
-    </audio>
+
+    
+	<audio id="quiz-audio">
+		<source src="{{ url_for('static', filename='audio/sonic-theme.mp3') }}" type="audio/mp3">
+	</audio>
+
+    <script>
+	
+    document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            const audio = document.getElementById('quiz-audio');
+            audio.play();
+        });
+    audio.play().then(() => {
+        if (currentQuestionIndex < totalQuestions - 1) {
+            
+            currentQuestionIndex++;
+            loadQuestion();
+        } else {
+            window.location.href = "/result"; 
+		}
+    }).catch(error => {
+        console.log("Audio playback failed:", error);
+        // Move to the next question immediately if audio fails to play
+        if (currentQuestionIndex < totalQuestions - 1) {
+            currentQuestionIndex++;
+            loadQuestion();
+        } else {
+            window.location.href = "/result";
+        }
+    });
+});
+
+
+    </script>
 </body>
 </html>
+
+
+
+
+
+<div class="sonic-container">
+        <div id="sonic" style="left: 0;">
+            <img src="{{ url_for('static', filename='images/sonic-running.gif') }}" alt="Sonic" width="100">
+        </div>
+        <div class="progress-line" id="progressLine"></div>
+    </div>
