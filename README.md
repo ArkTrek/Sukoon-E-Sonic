@@ -13,9 +13,19 @@ Sukoon-E-Sonic is an interactive quiz application designed to engage users in a 
 - Responsive design for various devices
 
 ---
-## Page Look (Design)
+## Index Page (Design)
 
 ![Page Look](https://github.com/user-attachments/assets/169d6034-cbdb-4383-a568-c67a20d8598b)
+
+--
+
+## CBT Page
+![CBT Page](https://github.com/user-attachments/assets/a19dc681-1f5f-4fb2-a6c9-713901388d9a)
+
+--
+
+## Result Page
+![resultPage](https://github.com/user-attachments/assets/26b5ada0-c67f-434d-a91e-ddebb29a7aa7)
 
 
 ---
