@@ -50,7 +50,7 @@
 - The **"vid.py"** file is able to combine a gif file with an audio file to generate a video file. Use it as needed.
 - If the gif holds a transparent bg, it will get overwritten by a white background during encoding.
 - The duration of the video file will be determined by the length of the audio file.
-- If the audio is making too much noise, just cut the source. Closing the browser won't stop the audio from playing - Cancel the command **"python app.py"**.
+- If the audio is making too much noise, just cut the source. <br> Closing the browser won't stop the audio from playing - Cancel the command **"python app.py"**.
 
 ---
 
