@@ -14,6 +14,11 @@ Sukoon-E-Sonic is an interactive quiz application designed to engage users in a 
 
 ---
 
+![Page Look](https://github.com/user-attachments/assets/169d6034-cbdb-4383-a568-c67a20d8598b)
+
+
+---
+
 ## Installation
 1. Clone the repository:
    ```bash
