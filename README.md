@@ -39,7 +39,9 @@
 ---
 
 ## Usage
-Open your browser and navigate to http://127.0.0.1:5000/ to access the quiz.
+- Create a virtual environment using python or anaconda and install the necessary libraries.
+- Run the command "python app.py".
+- Open your browser and navigate to http://127.0.0.1:5000/ to access the quiz.
 Follow the prompts to answer questions and receive feedback.
 
 <br>
