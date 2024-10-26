@@ -1,7 +1,9 @@
 # Sukoon-E-Sonic
 
 ## Overview
-Sukoon-E-Sonic is an interactive quiz application designed to engage users in a fun and educational manner. Leveraging the power of OpenAI's GPT for generating questions, this app provides a unique experience centered around emotional well-being.
+Sukoon-E-Sonic is an interactive quiz application designed to engage users in a fun and educational manner. This is used to learn the cognitive behavioural thinking capacity of a person based on their responses.
+<br>
+Leveraging the power of OpenAI's GPT for generating questions, this app provides a unique experience centered around emotional well-being. 
 
 ---
 
