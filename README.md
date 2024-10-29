@@ -3,6 +3,7 @@
 ## Overview 🌟
 - Sukoon-E-Sonic is an engaging, interactive quiz app that blends fun and learning to explore cognitive behavioral thinking (CBT) skills! 🧠
 - By using OpenAI’s GPT to generate questions, the app delivers a personalized experience focused on emotional well-being and self-discovery. 🌱💬
+- This system was created for showcasing the usage of AI in understanding emotional strengths and weaknesses and was created in collaboration with people+ai. 
 
 ---
 
